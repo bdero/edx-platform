@@ -38,6 +38,7 @@ from edxmako.shortcuts import render_to_string
 from models.settings.course_grading import CourseGradingModel
 from cms.lib.xblock.runtime import handler_url, local_resource_url
 from opaque_keys.edx.keys import UsageKey, CourseKey
+from student.access import is_xblock_visible_to_students
 
 __all__ = ['orphan_handler', 'xblock_handler', 'xblock_view_handler']
 
@@ -246,7 +247,8 @@ def xblock_view_handler(request, usage_key_string, view_name):
 
         return JsonResponse({
             'html': fragment.content,
-            'resources': hashed_resources.items()
+            'resources': hashed_resources.items(),
+            'is_student_visible': is_xblock_visible_to_students(xblock),
         })
 
     else:
