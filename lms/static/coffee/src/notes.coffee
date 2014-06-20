@@ -13,7 +13,7 @@ class StudentNotes
             $(el).data('notes-instance', @)
 
     # Initializes annotations on a container element in response to an init event.
-    onInitNotes: (event, uri=null) =>
+    onInitNotes: (event, uri=null, storage_url=null, token=null) =>
         event.stopPropagation()
 
         storeConfig = @getStoreConfig uri
@@ -47,10 +47,10 @@ class StudentNotes
                         return user.id  if user and user.id
                         user 
                 auth: 
-                    tokenUrl: location.protocol+'//'+location.host+"/token?course_id="+courseid
+                    token: token
 
                 store:
-                    prefix: 'http://catch.aws.af.cm/annotator'
+                    prefix: storage_url
 
                     annotationData: uri:uri
 
